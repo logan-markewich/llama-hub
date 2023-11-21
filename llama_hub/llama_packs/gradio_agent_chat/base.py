@@ -3,6 +3,7 @@ from typing import Dict, Any, List, Tuple, Optional
 from llama_index.llama_pack.base import BaseLlamaPack
 from llama_index.agent.types import BaseAgent
 from .gradio_theme import llama
+from gradio.themes.utils import fonts, colors, sizes
 
 from ansi2html import Ansi2HTMLConverter
 
@@ -11,7 +12,7 @@ import sys
 
 
 class Capturing(list):
-    """To capture the stdout from ReActAgent.chat with verbose=True. Taken from
+    """To capture the stdout from `BaseAgent.stream_chat` with `verbose=True`. Taken from
     https://stackoverflow.com/questions/16571150/\
         how-to-capture-stdout-output-from-a-python-function-call
     """
@@ -71,16 +72,54 @@ class GradioAgentChatPack(BaseLlamaPack):
         """Run the pipeline."""
         import gradio as gr
 
+        llama_theme = gr.themes.Soft(
+                primary_hue=colors.cyan,
+                secondary_hue=colors.pink,
+                neutral_hue=colors.purple,
+                spacing_size=sizes.spacing_md,
+                radius_size=sizes.radius_md,
+                text_size=sizes.text_lg,
+                font=(
+                    fonts.GoogleFont("Quicksand"),
+                    "ui-sans-serif",
+                    "sans-serif",
+                ),
+                font_mono=(
+                    fonts.GoogleFont("IBM Plex Mono"),
+                    "ui-monospace",
+                    "monospace",
+                )
+            )
+        llama_theme.set(
+            body_background_fill="#FFFFFF",
+            body_background_fill_dark="#000000",
+            button_primary_background_fill="linear-gradient(90deg, *primary_300, *secondary_400)",
+            button_primary_background_fill_hover="linear-gradient(90deg, *primary_200, *secondary_300)",
+            button_primary_text_color="white",
+            button_primary_background_fill_dark="linear-gradient(90deg, *primary_600, *secondary_800)",
+            slider_color="*secondary_300",
+            slider_color_dark="*secondary_600",
+            block_title_text_weight="600",
+            block_border_width="3px",
+            block_shadow="*shadow_drop_lg",
+            button_shadow="*shadow_drop_lg",
+            button_large_padding="32px",
+        )
+
         demo = gr.Blocks(
-            theme=llama,
-            css="#box { height: 420px; overflow-y: scroll !important}"
+            theme=llama_theme,
+            css="#box { height: 420px; overflow-y: scroll !important} #logo { align-self: right }"
         )
         with demo:
-            gr.Markdown(
-                "# Gradio ReActAgent Powered by LlamaIndex and LlamaHub 🦙\n"
-                "This Gradio app is powered by LlamaIndex's `ReActAgent` with\n"
-                "OpenAI's GPT-4-Turbo as the LLM. The tools are listed below.\n"
-            )
+            with gr.Row():
+                gr.Markdown(
+                    "# Gradio Chat With Your Agent Powered by LlamaIndex and LlamaHub 🦙\n"
+                    "This Gradio app allows you to chat with your own agent (`BaseAgent`).\n"
+                )
+                gr.Markdown(
+                    "[![Alt text](https://d3ddy8balm3goa.cloudfront.net/other/llama-index-light-transparent-sm-font.svg)](https://llamaindex.ai)",
+                    elem_id="logo"
+                )
             with gr.Row():
                 chat_window = gr.Chatbot(
                     label="Message History",
