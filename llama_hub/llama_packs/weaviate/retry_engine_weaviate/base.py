@@ -38,29 +38,33 @@ class WeaviateRetryEngine(BaseLlamaPack):
         from weaviate import Client  # noqa: F401
 
         self.client: Client = Client(host, auth_client_secret=auth_client_secret)
-        
+
         import weaviate
 
-        weaviate_client = self.client 
+        weaviate_client = self.client
         weaviate_collection = weaviate_client.get_or_create_collection(collection_name)
 
-        self._vector_store = WeaviateVectorStore(weaviate_collection=weaviate_collection)
-        
+        self._vector_store = WeaviateVectorStore(
+            weaviate_collection=weaviate_collection
+        )
+
         if nodes is not None:
             self._storage_context = StorageContext.from_defaults(
                 vector_store=self._vector_store
             )
-            self._index = VectorStoreIndex(nodes, storage_context=self._storage_context, **kwargs)
+            self._index = VectorStoreIndex(
+                nodes, storage_context=self._storage_context, **kwargs
+            )
         else:
-            self._index = VectorStoreIndex.from_vector_store(self._vector_store, **kwargs)
+            self._index = VectorStoreIndex.from_vector_store(
+                self._vector_store, **kwargs
+            )
             self._storage_context = self._index.storage_context
 
         self.retriever = self._index.as_retriever()
 
         base_query_engine = self._index.as_query_engine()
-        guideline_eval = GuidelineEvaluator(
-            guidelines=DEFAULT_GUIDELINES
-        )
+        guideline_eval = GuidelineEvaluator(guidelines=DEFAULT_GUIDELINES)
         self.query_engine = RetryGuidelineQueryEngine(
             base_query_engine, guideline_eval, resynthesize_query=True
         )

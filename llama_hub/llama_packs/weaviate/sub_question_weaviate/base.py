@@ -30,21 +30,27 @@ class WeaviateSubQuestion(BaseLlamaPack):
         from weaviate import Client  # noqa: F401
 
         self.client: Client = Client(host, auth_client_secret=auth_client_secret)
-        
+
         import weaviate
 
-        weaviate_client = self.client 
+        weaviate_client = self.client
         weaviate_collection = weaviate_client.get_or_create_collection(collection_name)
 
-        self._vector_store = WeaviateVectorStore(weaviate_collection=weaviate_collection)
-        
+        self._vector_store = WeaviateVectorStore(
+            weaviate_collection=weaviate_collection
+        )
+
         if nodes is not None:
             self._storage_context = StorageContext.from_defaults(
                 vector_store=self._vector_store
             )
-            self._index = VectorStoreIndex(nodes, storage_context=self._storage_context, **kwargs)
+            self._index = VectorStoreIndex(
+                nodes, storage_context=self._storage_context, **kwargs
+            )
         else:
-            self._index = VectorStoreIndex.from_vector_store(self._vector_store, **kwargs)
+            self._index = VectorStoreIndex.from_vector_store(
+                self._vector_store, **kwargs
+            )
             self._storage_context = self._index.storage_context
 
         self.retriever = self._index.as_retriever()
@@ -52,11 +58,12 @@ class WeaviateSubQuestion(BaseLlamaPack):
         query_engine = self._index.as_query_engine()
         query_engine_tools = [
             QueryEngineTool(
-                query_engine = query_engine,
-                metadata = ToolMetadata(name='Vector Index')
+                query_engine=query_engine, metadata=ToolMetadata(name="Vector Index")
             )
         ]
-        self.query_engine = SubQuestionQueryEngine.from_defaults(query_engine_tools=query_engine_tools)
+        self.query_engine = SubQuestionQueryEngine.from_defaults(
+            query_engine_tools=query_engine_tools
+        )
 
     def get_modules(self) -> Dict[str, Any]:
         """Get modules."""
