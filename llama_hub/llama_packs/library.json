@@ -9,11 +9,6 @@
     "author": "logan-markewich",
     "keywords": ["chroma", "retrieval", "vector"]
   },
-  "GradioReActAgentPack": {
-    "id": "llama_packs/gradio_react_agent_chatbot",
-    "author": "andrei-fajardo",
-    "keywords": ["gradio", "chatbot", "multimodal", "wikipedia", "rag"]
-  },
   "ZephyrQueryEnginePack": {
     "id": "llama_packs/zephyr_query_engine",
     "author": "logan-markewich",
@@ -48,5 +43,10 @@
     "id": "llama_packs/redis_ingestion_pipeline",
     "author": "logan-markewich",
     "keywords": ["redis", "ingestion", "pipeline", "index"]
+  },
+  "GradioReactAgentChatbotPack": {
+    "id": "llama_packs/gradio_react_agent_chatbot",
+    "author": "andrei-fajardo",
+    "keywords": ["gradio", "react-agent", "chatbot", "tools"] 
   }
 } 
