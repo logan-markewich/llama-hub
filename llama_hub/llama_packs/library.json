@@ -61,8 +61,8 @@
   },
   "GradioReActAgentPack": {
     "id": "llama_packs/gradio_react_agent_chatbot",
-    "author": "andrei-fajardo",
-    "keywords": ["gradio", "react-agent", "chatbot", "tools"] 
+    "author": "nerdai",
+    "keywords": ["gradio", "react-agent", "chatbot", "tool-use"] 
   },
   "WeaviateSubQuestion": {
     "id": "llama_packs/sub_question_weaviate",
@@ -78,5 +78,10 @@
     "id": "llama_packs/voyage_query_engine",
     "author": "Liuhong99",
     "keywords": ["voyage", "query", "retrieval", "embeddings"]
+  },
+  "GradioAgentChatPack": {
+    "id": "llama_packs/gradio_agent_chat",
+    "author": "nerdai",
+    "keywords": ["agent", "chatbot", "gradio", "tool-use"]
   }
 } 
