@@ -1,27 +1,3 @@
-# Gradio Chat With Your LlamaIndex Agent
-
-Create a LlamaIndex Agent (i.e., `BaseAgent`) and quickly chat with it using
-this pack's Gradio Chatbot interface.
-
-<p text-align="center">
-  <figure>
-    <img src="chat-with-your-agent-dark.png" width="75%" />
-    <figcaption>Dark mode</figcaption>
-  </figure>
-</p>
-<p text-align="center">
-  <figure>
-    <img src="chat-with-your-agent-light.png" width="75%" />
-    <figcaption>Light  mode</figcaption>
-  </figure>
-</p>
-
-## Usage
-
-You can download the pack to a `./gradio_agent_chat_pack` directory:
-
-`sample.py`
-```python
 from llama_index.llama_packs import download_llama_pack
 from llama_index.agent import OpenAIAgent
 from llama_index.llms import OpenAI
@@ -57,13 +33,3 @@ gradio_agent_chat_pack = GradioAgentChatPack(agent=agent)
 
 if __name__ == "__main__":
     gradio_agent_chat_pack.run()
-```
-
-From here, you can use the pack, or inspect and modify the pack in `./gradio_agent_chat_pack`.
-
-The `run()` function is a light wrapper around `gr.demo.launch()`. To run the
-app directly, use in your terminal:
-
-```bash
-python ./gradio_agent_chat/sample.py
-```

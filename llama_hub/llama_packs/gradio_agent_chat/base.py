@@ -2,7 +2,6 @@ from typing import Dict, Any, List, Tuple, Optional
 
 from llama_index.llama_pack.base import BaseLlamaPack
 from llama_index.agent.types import BaseAgent
-from .gradio_theme import llama
 from gradio.themes.utils import fonts, colors, sizes
 
 from ansi2html import Ansi2HTMLConverter
@@ -73,9 +72,9 @@ class GradioAgentChatPack(BaseLlamaPack):
         import gradio as gr
 
         llama_theme = gr.themes.Soft(
-                primary_hue=colors.cyan,
+                primary_hue=colors.purple,
                 secondary_hue=colors.pink,
-                neutral_hue=colors.purple,
+                neutral_hue=colors.gray,
                 spacing_size=sizes.spacing_md,
                 radius_size=sizes.radius_md,
                 text_size=sizes.text_lg,
