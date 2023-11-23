@@ -54,7 +54,7 @@ nodes = [...]
 # create the pack
 weaviate_pack = WeaviateSubQuestion(
   collection_name="test",
-  vector_store_info=vector_store_index 
+  vector_store_info=vector_store_info, 
   nodes=nodes,
   client=client
 )
